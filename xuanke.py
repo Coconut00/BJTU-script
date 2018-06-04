@@ -9,7 +9,7 @@ wait = WebDriverWait(driver, 10)
 
 def search():
     try:
-        driver.get('https://cas.bjtu.edu.cn/auth/login/?next=/o/authorize/%3Fresponse_type%3Dcode%26client_id%3DqamiHUSTlVvP6J9iMoPO7yvlb7zEU7qYRVK9P0xf%26state%3D1528084105%26redirect_uri%3Dhttps%3A//mis.bjtu.edu.cn/auth/callback/%3Fredirect_to%3D/home/')
+        driver.get('https://mis.bjtu.edu.cn/home/')
         name = wait.until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '#id_loginname'))
         )
@@ -19,14 +19,30 @@ def search():
         submit = wait.until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, '#form1 > div > div > button'))
         )
-        name.send_keys('16281154')
-        password.send_keys('273919')
+        name.send_keys('your student id')
+        password.send_keys('password')
         submit.click()
     except TimeoutException:
         return search()
 
+def tap_into_jiaowu():
+    ShaungXueWei = wait.until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, '#wrap > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(2) > div > div > table > tbody > tr:nth-child(2) > td:nth-child(1) > div > div > a'))
+    )
+    ShaungXueWei.click()
+    XuanKe = wait.until(
+        EC.element_to_be_clickable(
+            (By.CSS_SELECTOR, '#menu-toggler'))
+    )
+    XuanKe.click()
+    XuanKe =wait.until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, '# sidebar > div > div.nav-wrap > ul > li:nth-child(4) > a > span'))
+    )
+    XuanKe.click()
+
 def main():
     search()
+    tap_into_jiaowu()
 
 if __name__ == '__main__':
     main()
